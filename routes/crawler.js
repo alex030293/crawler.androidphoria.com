@@ -26,6 +26,7 @@ function _save_post(post){
 
                 post_header.set("title", post_title);
                 post_header.set("img", post_img);
+                post_header.set('pubDate', new Date(post['pubDate'][0]));
 
                 post_header.save(null, {
                     success: function(res) {
