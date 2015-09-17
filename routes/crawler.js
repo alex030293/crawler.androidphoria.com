@@ -9,6 +9,7 @@ function _save_post(post){
     var promise = new Parse.Promise();
 
     var post_title = post.title[0];
+    console.log("PUBDATE: " + post.pubDate);
     var post_img = post['content:encoded'].toString().substring(post['content:encoded'].toString().indexOf('src="')+5, post['content:encoded'].toString().indexOf('class="attachment-thumbnail wp-post-image"')-2)
     //console.log(post_title + "   -   "+post_img);
 
@@ -16,6 +17,7 @@ function _save_post(post){
     var _post_header = Parse.Object.extend("Post_Header");
     var query = new Parse.Query(_post_header);
     query.equalTo("title", post_title);
+    query.equalTo("pubDate", new Date(post.pubDate));
     query.find({
         success: function(results) {
             //Post not duplicated
