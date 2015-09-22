@@ -8,6 +8,8 @@ Parse.initialize(parse_config.appId, parse_config.jsKey, parse_config.masterKey)
 function _save_post(post){
     var promise = new Parse.Promise();
 
+    console.log(post);
+
     var post_title = post.title[0];
     console.log("PUBDATE: " + post.pubDate);
     var post_img = post['content:encoded'].toString().substring(post['content:encoded'].toString().indexOf('src="')+5, post['content:encoded'].toString().indexOf('class="attachment-thumbnail wp-post-image"')-2)
