@@ -25,6 +25,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
+app.get('/refresh', function(req, res, next){
+    console.log('[DEBUG]    Refresh request received');
+    require('./routes/crawler').update_posts();
+    res.end();
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
