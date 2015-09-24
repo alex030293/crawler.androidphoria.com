@@ -50,7 +50,25 @@ function _save_post(post){
                         p.save(null, {
                             success: function(r){
                                 console.log(r);
-                                promise.resolve(true);
+                                Parse.Push.send({
+                                    channels: [ "androidphoria" ],
+                                    data: {
+                                        post_title: post_title,
+                                        post_id: r.id,
+                                        img_url: r.get("img"),
+                                        post_url: r.get("link")
+                                    }
+                                }, {
+                                    success: function() {
+                                        console.log("[NFO]  Push sent :)");
+                                        promise.resolve(true);
+                                    },
+                                    error: function(error) {
+                                        console.log("[NFO]  Push error");
+                                        console.log(error);
+                                        promise.resolve(true);
+                                    }
+                                });
                             },
                             error: function(r, e){
 
