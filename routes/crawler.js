@@ -26,6 +26,7 @@ function _save_post(post){
                 var Post_Header = Parse.Object.extend("Post_Header");
                 var post_header = new Post_Header();
 
+                post_header.set('creator', post['dc:creator'][0]);
                 post_header.set("title", post_title);
                 post_header.set("img", post_img);
                 post_header.set('pubDate', new Date(post['pubDate'][0]));
