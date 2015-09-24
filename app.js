@@ -67,6 +67,6 @@ require('./routes/crawler').update_posts();
 //update posts
 setInterval(function(){
     require('./routes/crawler').update_posts();
-}, 10 * 60 * 1000);
+}, 5 * 60 * 1000);
 
 module.exports = app;

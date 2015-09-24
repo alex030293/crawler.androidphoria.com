@@ -49,7 +49,7 @@ function _save_post(post){
 
                         p.save(null, {
                             success: function(r){
-                                console.log(r);
+                                //console.log(r);
                                 Parse.Push.send({
                                     channels: [ "androidphoria" ],
                                     data: {
