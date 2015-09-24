@@ -16,7 +16,7 @@ function _save_post(post){
     //Check if post exist
     var _post_header = Parse.Object.extend("Post_Header");
     var query = new Parse.Query(_post_header);
-    query.equalTo("title", post_title);
+    query.equalTo('creator', post['dc:creator'][0]);
     query.equalTo("pubDate", new Date(post.pubDate));
     query.find({
         success: function(results) {
