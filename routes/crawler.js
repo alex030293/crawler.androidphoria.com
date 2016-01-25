@@ -10,8 +10,8 @@ function _save_post(post){
 
     var post_title = post.title[0];
     console.log("PUBDATE: " + post.pubDate);
-    var post_img = post['content:encoded'].toString().substring(post['content:encoded'].toString().indexOf('src="')+5, post['content:encoded'].toString().indexOf('class="attachment-thumbnail wp-post-image"')-2)
-    //console.log(post_title + "   -   "+post_img);
+    var post_img = post['content:encoded'].toString().substring(post['content:encoded'].toString().indexOf('src="')+5, post['content:encoded'].toString().indexOf('class="attachment-thumbnail')-2)
+    console.log(post_img);
 
     //Check if post exist
     var _post_header = Parse.Object.extend("Post_Header");
@@ -50,6 +50,7 @@ function _save_post(post){
                         p.save(null, {
                             success: function(r){
                                 //console.log(r);
+
                                 Parse.Push.send({
                                     channels: [ "androidphoria" ],
                                     data: {
@@ -69,6 +70,7 @@ function _save_post(post){
                                         promise.resolve(true);
                                     }
                                 });
+
                             },
                             error: function(r, e){
 
@@ -97,6 +99,8 @@ function _save_post(post){
 }
 
 function _update_posts(){
+
+
     //Get posts
     var options = {
         host: 'androidphoria.com',
@@ -114,19 +118,23 @@ function _update_posts(){
         //the whole response has been recieved, so we just print it out here
         response.on('end', function () {
             parseString(str, function (err, result) {
-                var channel = result.rss.channel[0];
-                var posts_array = channel.item;
+                if(result != null){
 
-                for(var i = 0; i < posts_array.length; i++){
-                    var post = posts_array[i];
-                    _save_post(post).then(function(r){
-                        console.log('resolved');
-                    });
+                    var channel = result.rss.channel[0];
+                    var posts_array = channel.item;
+                    for(var i = 0; i < posts_array.length; i++){
+                        var post = posts_array[i];
+                        _save_post(post).then(function(r){
+                            console.log('resolved');
+                        });
+                    }
                 }
             });
 
         });
     }).end();
+
+
 
 }
 
